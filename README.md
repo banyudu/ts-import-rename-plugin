@@ -1,4 +1,4 @@
-# ts-import-rename-plugin
+# ts-rename-import-plugin
 
 Rename import pathes in typescript compile result.
 

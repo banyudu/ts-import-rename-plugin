@@ -1,5 +1,5 @@
 {
-  "name": "ts-import-rename-plugin",
+  "name": "ts-rename-import-plugin",
   "version": "1.0.2",
   "description": "Rename import source",
   "main": "index.ts",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/banyudu/ts-import-rename-plugin.git"
+    "url": "git+https://github.com/banyudu/ts-rename-import-plugin.git"
   },
   "author": "Yudu Ban <banyudu@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/banyudu/ts-import-rename-plugin/issues"
+    "url": "https://github.com/banyudu/ts-rename-import-plugin/issues"
   },
-  "homepage": "https://github.com/banyudu/ts-import-rename-plugin#readme",
+  "homepage": "https://github.com/banyudu/ts-rename-import-plugin#readme",
   "dependencies": {
     "typescript": "^3.8.3"
   },
