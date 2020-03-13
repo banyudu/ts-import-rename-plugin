@@ -5,13 +5,24 @@ export interface ImportedStruct {
   variableName?: string;
 }
 
+interface Options {
+  transformer?: Transformer
+  from?: string
+  to?: string
+}
+
 type Transformer = (orig: string) => string
 
 export function createTransformer<T extends ts.Node>(
-  transformer?: Transformer
+  { transformer, from, to }: Options
 ): ts.TransformerFactory<T> {
-  if (!transformer) {
+  if (!transformer && (!from || !to)) {
     return ctx => node => node
+  }
+
+  if (!transformer) {
+    const regex = new RegExp(from)
+    transformer = (orig: string) => orig.replace(regex, to)
   }
   return context => {
     const visitor: ts.Visitor = node => {
@@ -23,9 +34,7 @@ export function createTransformer<T extends ts.Node>(
         return node;
       }
       let pkgName = node.moduleSpecifier.getText().slice(1, -1)
-      if (transformer) {
-        pkgName = transformer(pkgName)
-      }
+      pkgName = transformer(pkgName)
       return ts.updateImportDeclaration(
         node,
         node.decorators,

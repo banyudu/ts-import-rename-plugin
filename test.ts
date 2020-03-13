@@ -1,7 +1,7 @@
 import tsImportRenamePlugin from "./";
 import * as ts from "typescript";
 
-let source = `
+const sourceCode = `
 import react, { Component } from 'react'
 import './index.less'
 
@@ -11,13 +11,22 @@ export default AAA extends Component {
   }
 }
 `;
-let result = ts.transpileModule(source, {
+
+const pluginWithTransformer: ts.TransformerFactory<ts.SourceFile> = tsImportRenamePlugin({
+  transformer: name => name.replace(/\.less$/, '.css')
+})
+const pluginWithFromTo: ts.TransformerFactory<ts.SourceFile> = tsImportRenamePlugin({
+  from: '\\.less$',
+  to: '.css'
+})
+const transform = (source, transformer) => ts.transpileModule(source, {
   compilerOptions: {
     module: ts.ModuleKind.CommonJS,
     target: ts.ScriptTarget.ESNext,
     jsx: ts.JsxEmit.React
   },
-  transformers: { before: [tsImportRenamePlugin(name => name.replace(/\.less$/, '.css'))] }
-});
+  transformers: { before: [transformer] }
+}).outputText;
 
-console.log("result is: \n", result.outputText);
+console.log("result1 is: \n", transform(sourceCode, pluginWithTransformer));
+console.log("result2 is: \n", transform(sourceCode, pluginWithFromTo));

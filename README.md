@@ -13,7 +13,15 @@ let result = ts.transpileModule(source, {
     target: ts.ScriptTarget.ESNext,
     jsx: ts.JsxEmit.React
   },
-  transformers: { before: [tsImportRenamePlugin(name => name.replace(/\.less$/, '.css'))] }
+  transformers: { before: [tsImportRenamePlugin({
+    transformer: name => name.replace(/\.less$/, '.css')
+  })] }
+
+  // or
+  // tsImportRenamePlugin({
+  //   from: '\\.less$',
+  //   to: '.css'
+  // })
 });
 ```
 
