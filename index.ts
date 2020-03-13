@@ -16,16 +16,18 @@ type Transformer = (orig: string) => string
 export function createTransformer<T extends ts.Node>(
   { transformer, from, to }: Options
 ): ts.TransformerFactory<T> {
-  if (!transformer && (!from || !to)) {
-    return ctx => node => node
-  }
-
-  if (!transformer) {
+  if (!transformer && from && to) {
     const regex = new RegExp(from)
     transformer = (orig: string) => orig.replace(regex, to)
   }
+  if (!transformer) {
+    return ctx => node => node
+  }
   return context => {
     const visitor: ts.Visitor = node => {
+      if (!transformer) {
+        return node
+      }
       if (ts.isSourceFile(node)) {
         return ts.visitEachChild(node, visitor, context);
       }

@@ -19,7 +19,7 @@ const pluginWithFromTo: ts.TransformerFactory<ts.SourceFile> = tsImportRenamePlu
   from: '\\.less$',
   to: '.css'
 })
-const transform = (source, transformer) => ts.transpileModule(source, {
+const transform = (source: string, transformer: ts.TransformerFactory<ts.SourceFile>) => ts.transpileModule(source, {
   compilerOptions: {
     module: ts.ModuleKind.CommonJS,
     target: ts.ScriptTarget.ESNext,
