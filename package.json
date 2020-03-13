@@ -1,6 +1,6 @@
 {
   "name": "ts-import-rename-plugin",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Rename import source",
   "main": "index.ts",
   "scripts": {
