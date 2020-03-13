@@ -4,6 +4,11 @@ import * as ts from "typescript";
 const sourceCode = `
 import react, { Component } from 'react'
 import './index.less'
+require('./hello.less')
+
+if (true) {
+  require('./world.less')
+}
 
 export default AAA extends Component {
   render () {
@@ -29,4 +34,4 @@ const transform = (source: string, transformer: ts.TransformerFactory<ts.SourceF
 }).outputText;
 
 console.log("result1 is: \n", transform(sourceCode, pluginWithTransformer));
-console.log("result2 is: \n", transform(sourceCode, pluginWithFromTo));
+// console.log("result2 is: \n", transform(sourceCode, pluginWithFromTo));

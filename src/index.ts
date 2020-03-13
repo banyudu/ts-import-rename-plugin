@@ -32,18 +32,24 @@ export function createTransformer<T extends ts.Node>(
         return ts.visitEachChild(node, visitor, context);
       }
 
-      if (!ts.isImportDeclaration(node)) {
-        return node;
+      if (ts.isImportDeclaration(node)) {
+        let pkgName = node.moduleSpecifier.getText().slice(1, -1)
+        pkgName = transformer(pkgName)
+        return ts.updateImportDeclaration(
+          node,
+          node.decorators,
+          node.modifiers,
+          node.importClause,
+          ts.createStringLiteral(pkgName)
+        )
       }
-      let pkgName = node.moduleSpecifier.getText().slice(1, -1)
-      pkgName = transformer(pkgName)
-      return ts.updateImportDeclaration(
-        node,
-        node.decorators,
-        node.modifiers,
-        node.importClause,
-        ts.createStringLiteral(pkgName)
-      )
+
+      if (ts.isStringLiteral(node) && ts.isCallExpression(node.parent) && node.parent.expression.getText() === 'require') {
+        let pkgName = node.getText().slice(1, -1)
+        pkgName = transformer(pkgName)
+        return ts.createStringLiteral(pkgName)
+      }
+      return ts.visitEachChild(node, visitor, context);
     };
 
     return (node: T) => ts.visitNode(node, visitor);
