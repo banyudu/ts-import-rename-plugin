@@ -38,3 +38,15 @@ to
 import './index.css'
 export default () => <div className='hello' />
 ```
+
+Also works with [ttypescript](https://github.com/cevek/ttypescript)
+
+```json
+{
+  "compilerOptions": {
+    "plugins": [
+      { "transform": "ts-rename-import-plugin", "type": "config", "from": "\\.less$", "to": ".css" },
+    ]
+  }
+}
+```
