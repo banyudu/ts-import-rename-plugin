@@ -34,26 +34,30 @@ export function createTransformer<T extends ts.Node>(
 
       if (ts.isImportDeclaration(node)) {
         const pkgName = node.moduleSpecifier.getText().slice(1, -1)
-        const newName = transformer(pkgName)
-        if (newName === pkgName) {
+        const newPkgName = transformer(pkgName)
+
+        if(pkgName === newPkgName) {
           return node
         }
+
         return ts.updateImportDeclaration(
           node,
           node.decorators,
           node.modifiers,
           node.importClause,
-          ts.createStringLiteral(newName)
+          ts.createStringLiteral(newPkgName)
         )
       }
 
       if (ts.isStringLiteral(node) && ts.isCallExpression(node.parent) && node.parent.expression.getText() === 'require') {
         const pkgName = node.getText().slice(1, -1)
-        const newName = transformer(pkgName)
-        if (newName === pkgName) {
+        const newPkgName = transformer(pkgName)
+
+        if(pkgName === newPkgName) {
           return node
         }
-        return ts.createStringLiteral(newName)
+
+        return ts.createStringLiteral(newPkgName)
       }
       return ts.visitEachChild(node, visitor, context);
     };
