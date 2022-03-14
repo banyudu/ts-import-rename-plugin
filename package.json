@@ -25,10 +25,11 @@
     "url": "https://github.com/banyudu/ts-rename-import-plugin/issues"
   },
   "homepage": "https://github.com/banyudu/ts-rename-import-plugin#readme",
-  "dependencies": {
-    "typescript": "^3.8.3"
+  "peerDependencies": {
+    "typescript": ">=3 <=4"
   },
   "devDependencies": {
-    "@types/node": "^13.9.0"
+    "@types/node": "^13.9.0",
+    "typescript": "^3.8.3"
   }
 }

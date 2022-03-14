@@ -1,6 +1,6 @@
 # ts-rename-import-plugin
 
-Rename import pathes in typescript compile result.
+Rename import paths in typescript compile result.
 
 ## UseCases
 
